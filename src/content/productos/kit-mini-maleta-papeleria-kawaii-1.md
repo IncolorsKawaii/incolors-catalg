@@ -1,11 +1,29 @@
 ---
 title: "Kit Mini Maleta PAPELERIA Kawaii #1"
-slug: "kit-mini-maleta-papeleria-kawaii-1"
 price: 68500
-availability: true
-tags: ["kit minimaleta", "minimaleta", "papeleria", "kawaii", "nuevo"]
+currency: "COP"
+available: true
 destacado: true
 fecha: 2025-05-01
+tags:
+  - kit minimaleta
+  - minimaleta
+  - papeleria
+  - kawaii
+  - nuevo
+  colors:
+  - Azul
+  - Fucsia
+  - Amarillo
+  - Verde
+  - Aguamarina
+  - Naranja
+  - Rojo
+  - Morado
+  - Rosado Claro
+measures:
+  alto: "15.5Cm + 7 Cm Agarradera"
+  ancho: "9 Cm"
 coverImage: "/src/images/products/kitminipapeleria1.jpg"
 images:
   - /src/images/products/kitminipapeleria1.jpg
