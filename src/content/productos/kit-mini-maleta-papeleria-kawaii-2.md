@@ -25,9 +25,9 @@ measures:
   alto: "15.5Cm + 7 Cm Agarradera"
   ancho: "9 Cm"
 images:
-  - /src/images/products/kitminipapeleria2.jpg
-  - /src/images/products/kitminipapeleria2incluye.png
- coverImage: "/src/images/products/kitminipapeleria2.jpg"
+  - "/src/images/products/kitminipapeleria2.jpg"
+  - "/src/images/products/kitminipapeleria2incluye.png"
+coverImage: "/src/images/products/kitminipapeleria2.jpg"
 description: |
   ⚠ Imagenes Ilustrativas, porfavor leer la descripcion completa para conocer lo que incluye cada kit👇👇
 
@@ -53,3 +53,4 @@ description: |
   • El color exterior puede variar ligeramente por la luz y ambientacion del lugar. 😍  
   👇👇  
   ⚠NO VENTA AL POR MAYOR
+---

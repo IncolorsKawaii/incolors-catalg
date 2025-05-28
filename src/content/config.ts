@@ -6,6 +6,8 @@ const productos = defineCollection({
     price: z.number(),
     currency: z.string(),
     available: z.boolean(),
+    destacado: z.boolean().optional(),
+    fecha: z.date().optional(),
     tags: z.array(z.string()),
     colors: z.array(z.string()),
     measures: z.object({

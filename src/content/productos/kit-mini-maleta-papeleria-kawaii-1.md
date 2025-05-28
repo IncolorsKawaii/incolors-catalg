@@ -11,7 +11,7 @@ tags:
   - papeleria
   - kawaii
   - nuevo
-  colors:
+colors:
   - Azul
   - Fucsia
   - Amarillo
@@ -24,10 +24,10 @@ tags:
 measures:
   alto: "15.5Cm + 7 Cm Agarradera"
   ancho: "9 Cm"
-coverImage: "/src/images/products/kitminipapeleria1.jpg"
+coverImage: "/src/images/products/kitminipapeleria1foto.jpg"
 images:
-  - /src/images/products/kitminipapeleria1.jpg
-  - /src/images/products/kitminipapeleria1incluye.jpg
+  - "/src/images/products/kitminipapeleria1foto.jpg"
+  - "/src/images/products/kitminipapeleria1incluye.jpg"
 description: |
   ⚠️ Imágenes Ilustrativas, porfavor leer la descripción completa para conocer lo que incluye cada kit👇👇
 

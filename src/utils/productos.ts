@@ -7,7 +7,7 @@ const CANTIDAD_NUEVOS = 5;
 const CANTIDAD_ALEATORIOS = 10;
 
 export async function obtenerProductos() {
-  const productos = await getCollection('products');
+  const productos = await getCollection('productos');
 
   // Filtrar productos disponibles
   const disponibles = productos.filter(p => p.data.available);

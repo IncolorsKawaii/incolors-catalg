@@ -1,15 +1,42 @@
 ---
-import SeccionProductos from '../../components/SeccionProductos.astro';
-import Layout from '../../layouts/Layout.astro';
-import { obtenerProductos } from '../../utils/productos';
+import { getCollection } from 'astro:content';
+import SeccionProductos from '../components/SeccionProductos.astro';
+import Layout from '../layouts/Layout.astro';
 
-const { destacados, nuevos, aleatorios } = await obtenerProductos();
+// Obtener todos los productos
+const todos = await getCollection('productos');
+
+// Filtrar productos disponibles
+const productosDisponibles = todos.filter(p => p.data.available);
+
+// 5 productos destacados (tag: 'destacado')
+const destacados = productosDisponibles
+  .filter(p => p.data.destacado === true)
+  .slice(0, 5);
+
+// 5 productos más recientes
+const recientes = [...productosDisponibles]
+  .sort((a, b) => new Date(b.data.pubDate) - new Date(a.data.pubDate))
+  .slice(0, 5);
+
+// 10 productos aleatorios (sin repetir destacados y recientes)
+function obtenerAleatorios(lista, excluir = [], cantidad = 10) {
+  const excluidos = new Set(excluir.map(p => p.slug));
+  const filtrados = lista.filter(p => !excluidos.has(p.slug));
+  for (let i = filtrados.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [filtrados[i], filtrados[j]] = [filtrados[j], filtrados[i]];
+  }
+  return filtrados.slice(0, cantidad);
+}
+
+const aleatorios = obtenerAleatorios(productosDisponibles, [...destacados, ...recientes]);
 ---
 
 <Layout>
   <h1 style="font-size: 2rem; text-align: center; color: #ec407a;">🌈 Bienvenida a tu Tienda Kawaii 🌈</h1>
 
   <SeccionProductos titulo="✨ Productos Destacados ✨" productos={destacados.map(p => p.data)} />
-  <SeccionProductos titulo="🆕 Nuevos Ingresos 🆕" productos={nuevos.map(p => p.data)} />
+  <SeccionProductos titulo="🆕 Nuevos Ingresos 🆕" productos={recientes.map(p => p.data)} />
   <SeccionProductos titulo="🎁 Descubre algo nuevo 🎁" productos={aleatorios.map(p => p.data)} />
 </Layout>
