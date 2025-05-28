@@ -1,0 +1,265 @@
+---
+import { useState, useEffect } from 'astro/jsx-runtime';
+---
+
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>🛒 Tu Pedido Kawaii</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: #fff0f6;
+      color: #c2185b;
+      padding: 2rem;
+      max-width: 720px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .cart-item {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      background: #ffe4f1;
+      padding: 1rem;
+      border-radius: 12px;
+      align-items: center;
+    }
+    .cart-item img {
+      width: 80px;
+      height: 80px;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+    .item-info {
+      flex-grow: 1;
+    }
+    .item-title {
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+    }
+    .item-price {
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+    .quantity-input {
+      width: 60px;
+      border-radius: 8px;
+      border: 1px solid #c2185b;
+      padding: 0.25rem 0.5rem;
+      text-align: center;
+      font-weight: bold;
+      color: #c2185b;
+      background: #fff0f6;
+    }
+    button.remove-btn {
+      background: #ff80ab;
+      border: none;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+    }
+    .total {
+      text-align: right;
+      font-weight: bold;
+      font-size: 1.3rem;
+      margin: 1.5rem 0;
+      color: #c2185b;
+    }
+    form {
+      background: #ffd6e8;
+      padding: 1.5rem;
+      border-radius: 12px;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 0.25rem;
+      margin-top: 1rem;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 0.5rem;
+      border-radius: 8px;
+      border: 1px solid #c2185b;
+      background: #fff0f6;
+      color: #c2185b;
+      font-weight: bold;
+      font-size: 1rem;
+      font-family: inherit;
+    }
+    button.send-btn {
+      margin-top: 1.5rem;
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #ff80ab, #ff4081);
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button.send-btn:hover {
+      background: linear-gradient(135deg, #ff4081, #ff80ab);
+    }
+    p.empty-msg {
+      text-align: center;
+      font-size: 1.2rem;
+      margin: 2rem 0;
+      color: #c2185b;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🛒 Tu Pedido Kawaii</h1>
+
+  <div id="cart-container">
+    <!-- Aquí se cargan los productos -->
+  </div>
+
+  <div class="total" id="cart-total">Total: $0</div>
+
+  <form id="order-form">
+    <label for="name">✨ Tu Nombre</label>
+    <input type="text" id="name" name="name" placeholder="Ej: Ana" required />
+
+    <label for="phone">📱 Tu Teléfono</label>
+    <input type="tel" id="phone" name="phone" placeholder="Ej: +57 300 123 4567" required pattern="^\+?\d{7,15}$" />
+
+    <label for="address">🏠 Dirección de Envío</label>
+    <textarea id="address" name="address" placeholder="Ej: Calle 123 #45-67, Bogotá" rows="3" required></textarea>
+
+    <button type="submit" class="send-btn">📲 Enviar Pedido por WhatsApp</button>
+  </form>
+
+  <p class="empty-msg" id="empty-msg" style="display:none;">Tu carrito está vacío 😿</p>
+
+  <script>
+    const cartContainer = document.getElementById('cart-container');
+    const cartTotalEl = document.getElementById('cart-total');
+    const emptyMsg = document.getElementById('empty-msg');
+    const form = document.getElementById('order-form');
+
+    // Carga carrito de localStorage
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+    function renderCart() {
+      cartContainer.innerHTML = '';
+      if (cart.length === 0) {
+        cartTotalEl.style.display = 'none';
+        form.style.display = 'none';
+        emptyMsg.style.display = 'block';
+        return;
+      }
+      emptyMsg.style.display = 'none';
+      cartTotalEl.style.display = 'block';
+      form.style.display = 'block';
+
+      let total = 0;
+      cart.forEach((item, index) => {
+        total += item.price * item.quantity;
+
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+          <img src="${item.image}" alt="${item.title}" />
+          <div class="item-info">
+            <div class="item-title">${item.title}</div>
+            <div class="item-price">Precio unitario: $${item.price.toLocaleString('es-CO')}</div>
+            <label>
+              Cantidad: 
+              <input type="number" min="1" value="${item.quantity}" class="quantity-input" data-index="${index}" />
+            </label>
+          </div>
+          <button class="remove-btn" data-index="${index}" title="Eliminar producto">🗑️</button>
+        `;
+        cartContainer.appendChild(div);
+      });
+
+      cartTotalEl.textContent = `Total: $${total.toLocaleString('es-CO')}`;
+    }
+
+    // Actualiza cantidad
+    cartContainer.addEventListener('input', e => {
+      if (e.target.classList.contains('quantity-input')) {
+        const idx = e.target.getAttribute('data-index');
+        let newQty = parseInt(e.target.value);
+        if (isNaN(newQty) || newQty < 1) {
+          newQty = 1;
+          e.target.value = 1;
+        }
+        cart[idx].quantity = newQty;
+        localStorage.setItem('cart', JSON.stringify(cart));
+        renderCart();
+      }
+    });
+
+    // Eliminar producto
+    cartContainer.addEventListener('click', e => {
+      if (e.target.classList.contains('remove-btn')) {
+        const idx = e.target.getAttribute('data-index');
+        cart.splice(idx, 1);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        renderCart();
+      }
+    });
+
+    // Enviar pedido por WhatsApp
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      if (cart.length === 0) {
+        alert('Tu carrito está vacío 😿');
+        return;
+      }
+
+      const name = form.name.value.trim();
+      const phone = form.phone.value.trim();
+      const address = form.address.value.trim();
+
+      if (!name || !phone || !address) {
+        alert('Por favor llena todos los datos personales 🥺');
+        return;
+      }
+
+      // Construir mensaje kawaii para WhatsApp
+      let message = `✨ *Nuevo Pedido Kawaii* ✨%0A%0A`;
+      message += `*Nombre:* ${encodeURIComponent(name)}%0A`;
+      message += `*Teléfono:* ${encodeURIComponent(phone)}%0A`;
+      message += `*Dirección:* ${encodeURIComponent(address)}%0A%0A`;
+      message += `*Detalles del pedido:*%0A`;
+
+      let total = 0;
+      cart.forEach(item => {
+        const line = `- ${item.title} x${item.quantity} = $${(item.price * item.quantity).toLocaleString('es-CO')}`;
+        message += encodeURIComponent(line) + '%0A';
+        total += item.price * item.quantity;
+      });
+
+      message += `%0A*Total:* $${total.toLocaleString('es-CO')}%0A%0A`;
+      message += `Gracias por tu compra kawaii! 💖`;
+
+      // Número de WhatsApp destino - cambiar por tu número real sin signos ni espacios
+      const whatsappNumber = '57XXXXXXXXXX';
+
+      // Abrir WhatsApp con mensaje
+      const url = `https://wa.me/${whatsappNumber}?text=${message}`;
+      window.open(url, '_blank');
+    });
+
+    // Renderizar al cargar
+    renderCart();
+  </script>
+</body>
+</html>

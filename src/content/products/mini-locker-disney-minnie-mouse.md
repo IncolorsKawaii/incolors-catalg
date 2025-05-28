@@ -3,11 +3,14 @@ title: "Mini Locker Disney Minnie Mouse"
 price: 138500
 currency: "COP"
 available: true
+destacado: true
+fecha: 2025-05-27
 tags:
   - juguete
   - mini locker
   - disney
   - minnie mouse
+  - reciente
 measures:
   alto: "25 Cm"
   ancho: "11 Cm"
@@ -15,8 +18,14 @@ measures:
 material: "Plástico"
 color: "Como la imagen"
 peso: "0.40 Kg"
----
-
+images:
+  - /src/images/products/lockerminnie0.jpg
+  - /src/images/products/lockerminnie1.jpg
+  - /src/images/products/lockerminnie2.jpg
+  - /src/images/products/lockerminnie3.jpg
+  - /src/images/products/lockerminnie5.jpg
+coverImage: "/src/images/products/lockerminnie0.jpg"
+description: |
 Casillero de Minnie Mouse y mochila exclusiva. Personaliza tu casillero con 10 sorpresas
 
 ¡𝗨𝗻 𝗺𝗶𝗻𝗶 𝗰𝗮𝘀𝗶𝗹𝗹𝗲𝗿𝗼 𝗱𝗲 𝘁𝗿𝗮𝗯𝗮𝗷𝗼 𝗿𝗲𝗮𝗹!  

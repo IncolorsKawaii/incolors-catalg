@@ -1,0 +1,174 @@
+---
+import { glob } from 'astro:content';
+
+const allProducts = await glob('../content/products/*.md');
+const nuevos = allProducts.filter(product =>
+  product.frontmatter.tags?.includes('Nuevo')
+);
+
+function getMainImage(product) {
+  return product.frontmatter.images?.[0] || '';
+}
+
+function formatPrice(price, currency = 'COP') {
+  return new Intl.NumberFormat('es-CO', {
+    style: 'currency',
+    currency,
+  }).format(price);
+}
+---
+
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Catálogo Incolors Kawaii 🌸</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-color: #ffe6f0; /* rosa pastel */
+      margin: 0;
+      padding: 0;
+      color: #6a1b9a; /* violeta pastel */
+    }
+    h1 {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 2.8rem;
+      font-weight: 900;
+      text-shadow: 1px 1px 5px #f8bbd0;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 1.4rem;
+      padding: 1rem 2rem 3rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .product-card {
+      background: #fff0f6;
+      border-radius: 18px;
+      padding: 1rem;
+      box-shadow: 0 8px 12px rgba(255, 192, 203, 0.3);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.3s ease;
+      border: 2px solid #f8bbd0;
+    }
+    .product-card:hover {
+      transform: scale(1.05);
+      border-color: #d81b60;
+      box-shadow: 0 12px 20px rgba(255, 105, 180, 0.5);
+    }
+    .product-card img {
+      max-width: 100%;
+      border-radius: 18px;
+      object-fit: cover;
+      height: 180px;
+      box-shadow: 0 4px 8px rgba(255, 192, 203, 0.5);
+    }
+    .product-info {
+      margin-top: 0.8rem;
+      flex-grow: 1;
+    }
+    .product-title {
+      font-weight: 900;
+      margin: 0.5rem 0;
+      font-size: 1.3rem;
+      color: #ad1457;
+    }
+    .price {
+      color: #c2185b;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+    button.add-cart {
+      background: linear-gradient(135deg, #ff80ab 0%, #ff4081 100%);
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 0.7rem 1.2rem;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 1rem;
+      box-shadow: 0 6px 8px rgba(255, 105, 180, 0.6);
+      transition: background 0.3s ease;
+    }
+    button.add-cart:hover {
+      background: linear-gradient(135deg, #f50057 0%, #c51162 100%);
+    }
+    /* Botón flotante carrito kawaii */
+    #btn-cart {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: linear-gradient(135deg, #f48fb1 0%, #f06292 100%);
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      color: white;
+      font-size: 28px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(244, 143, 177, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      transition: background 0.3s ease;
+    }
+    #btn-cart:hover {
+      background: linear-gradient(135deg, #ec407a 0%, #d81b60 100%);
+    }
+  </style>
+</head>
+<body>
+  <h1>🌸 Catálogo Destacados Incolors Kawaii 🌸</h1>
+
+  <section class="gallery">
+    {nuevos.length === 0 ? (
+      <p style="grid-column: 1/-1; text-align:center; font-size:1.2rem;">No hay productos nuevos disponibles 😢</p>
+    ) : (
+      nuevos.map(product => (
+        <article class="product-card" key={product.slug}>
+          <a href={`/products/${product.slug}`} style="text-decoration:none;">
+            <img src={getMainImage(product)} alt={product.frontmatter.title} loading="lazy" />
+            <div class="product-info">
+              <h2 class="product-title">{product.frontmatter.title} 💖</h2>
+              <div class="price">{formatPrice(product.frontmatter.price, product.frontmatter.currency)}</div>
+            </div>
+          </a>
+          <button
+            class="add-cart"
+            onClick={() => {
+              const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+              if (!cart.find(item => item.slug === product.slug)) {
+                cart.push({
+                  slug: product.slug,
+                  title: product.frontmatter.title,
+                  price: product.frontmatter.price,
+                  currency: product.frontmatter.currency,
+                  image: getMainImage(product),
+                  quantity: 1,
+                });
+                localStorage.setItem('cart', JSON.stringify(cart));
+                alert(`💗 Añadido "${product.frontmatter.title}" al carrito kawaii!`);
+              } else {
+                alert(`⚠️ "${product.frontmatter.title}" ya esta en tu carrito kawaii!`);
+              }
+            }}
+          >
+            Añadir al carrito 🛒
+          </button>
+        </article>
+      ))
+    )}
+  </section>
+
+  <button id="btn-cart" aria-label="Abrir carrito kawaii" onClick={() => window.location.href = '/carrito'}>
+    🛒
+  </button>
+</body>
+</html>

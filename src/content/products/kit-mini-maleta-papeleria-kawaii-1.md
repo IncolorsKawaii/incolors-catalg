@@ -4,7 +4,12 @@ slug: "kit-mini-maleta-papeleria-kawaii-1"
 price: 68500
 availability: true
 tags: ["kit minimaleta", "minimaleta", "papeleria", "kawaii", "nuevo"]
-coverImage: "/images/products/mini-maleta-kawaii1.jpg"
+destacado: true
+fecha: 2025-05-01
+coverImage: "/src/images/products/kitminipapeleria1.jpg"
+images:
+  - /src/images/products/kitminipapeleria1.jpg
+  - /src/images/products/kitminipapeleria1incluye.jpg
 description: |
   ⚠️ Imágenes Ilustrativas, porfavor leer la descripción completa para conocer lo que incluye cada kit👇👇
 

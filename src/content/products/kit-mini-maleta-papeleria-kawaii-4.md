@@ -3,6 +3,8 @@ title: "Kit Mini Maleta PAPELERIA Kawaii #4"
 price: 46500
 currency: "COP"
 available: true
+destacado: true
+fecha: 2025-05-01
 tags:
   - kit minimaleta
   - minimaleta
@@ -22,8 +24,11 @@ colors:
 measures:
   alto: "15.5Cm + 7 Cm Agarradera"
   ancho: "9 Cm"
----
-
+images:
+  - /src/images/products/kitminipapeleria4.jpg
+  - /src/images/products/kitminipapeleria4incluye.png
+coverImage: "/src/images/products/kitminipapeleria4.jp"
+description: |
 ⚠ Imágenes Ilustrativas, por favor leer la descripción completa para conocer lo que incluye cada kit👇👇
 
 𝗘𝗹 𝗞𝗶𝘁 #4: Incluye

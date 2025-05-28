@@ -1,0 +1,22 @@
+---
+// src/components/ProductGallery.astro
+import { Swiper, SwiperSlide } from 'swiper/astro';
+import 'swiper/css';
+
+const { images = [] } = Astro.props;
+---
+
+<Swiper
+  spaceBetween={10}
+  slidesPerView={1}
+  loop={true}
+  pagination={{ clickable: true }}
+  class="rounded-xl shadow-md mb-4"
+>
+  {images.map((src, i) => (
+    <SwiperSlide key={i}>
+      <img src={src} alt={`Imagen ${i + 1}`} class="w-full h-auto rounded-lg" loading="lazy" />
+    </SwiperSlide>
+  ))}
+</Swiper>
+ 

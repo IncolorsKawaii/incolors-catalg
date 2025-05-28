@@ -1,0 +1,97 @@
+---
+export interface Props {
+  title: string;
+  price: number;
+  currency: string;  // ahora obligatorio para mostrar símbolo
+  available: boolean;
+  coverImage?: string;
+  images?: string[];
+  buyUrl?: string; // enlace al botón de compra
+}
+
+const { title, price, currency, available, coverImage, images, buyUrl } = Astro.props;
+const portada = coverImage ?? images?.[0] ?? "/default-image.jpg";
+
+// Función simple para símbolo según currency
+function formatoPrecio(price: number, currency: string) {
+  switch(currency) {
+    case "COP": return `$${price.toLocaleString("es-CO")}`;
+    case "USD": return `US$${price.toLocaleString("en-US")}`;
+    case "EUR": return `€${price.toLocaleString("de-DE")}`;
+    default: return `${currency} ${price.toLocaleString()}`;
+  }
+}
+---
+
+<article class="product-card">
+  <img src={portada} alt={title} class="product-image" loading="lazy" />
+  <div class="product-details">
+    <h2 class="product-title">{title}</h2>
+    <p class="product-price">{formatoPrecio(price, currency)}</p>
+    {available ? (
+      <p class="product-available">✅ Disponible</p>
+    ) : (
+      <p class="product-unavailable">❌ Agotado</p>
+    )}
+
+    {available && buyUrl && (
+      <a href={buyUrl} class="buy-button" target="_blank" rel="noopener">
+        🛒 Comprar
+      </a>
+    )}
+  </div>
+</article>
+
+<style>
+  .product-card {
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px #00000020;
+    padding: 1rem;
+    background: white;
+    transition: transform 0.2s ease;
+  }
+  .product-card:hover {
+    transform: scale(1.02);
+  }
+  .product-image {
+    width: 100%;
+    height: auto;
+    border-radius: 0.75rem;
+    object-fit: cover;
+  }
+  .product-details {
+    margin-top: 0.75rem;
+    text-align: center;
+  }
+  .product-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+  .product-price {
+    color: #f48fb1;
+    font-size: 1rem;
+    margin: 0.25rem 0;
+  }
+  .product-available {
+    color: green;
+    font-weight: 500;
+  }
+  .product-unavailable {
+    color: red;
+    font-weight: 500;
+  }
+  .buy-button {
+    display: inline-block;
+    margin-top: 0.5rem;
+    background-color: #ffb6c1;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  .buy-button:hover {
+    background-color: #ff80ab;
+  }
+</style>
