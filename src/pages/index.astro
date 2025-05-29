@@ -34,9 +34,9 @@ const aleatorios = obtenerAleatorios(productosDisponibles, [...destacados, ...re
 ---
 
 <Layout>
-  <h1 style="font-size: 2rem; text-align: center; color: #ec407a;">🌈 Bienvenida a tu Tienda Kawaii 🌈</h1>
+  <h1 style="font-size: 2rem; text-align: center; color: #ec407a;">🌈 Bienvenida a Incolors Kawaii 🌈</h1>
 
-  <SeccionProductos titulo="✨ Productos Destacados ✨" productos={destacados.map(p => p.data)} />
-  <SeccionProductos titulo="🆕 Nuevos Ingresos 🆕" productos={recientes.map(p => p.data)} />
-  <SeccionProductos titulo="🎁 Descubre algo nuevo 🎁" productos={aleatorios.map(p => p.data)} />
+  <SeccionProductos titulo="✨ Productos Destacados ✨" productos={destacados.map(p => ({ ...p.data, slug: p.slug }))} />
+  <SeccionProductos titulo="🆕 Nuevos Ingresos 🆕" productos={recientes.map(p => ({ ...p.data, slug: p.slug }))} />
+  <SeccionProductos titulo="🎁 Descubre algo nuevo 🎁" productos={aleatorios.map(p => ({ ...p.data, slug: p.slug }))} />
 </Layout>

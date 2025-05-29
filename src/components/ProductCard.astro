@@ -7,9 +7,10 @@ export interface Props {
   coverImage?: string;
   images?: string[];
   buyUrl?: string; // enlace al botón de compra
+  slug: string;
 }
 
-const { title, price, currency, available, coverImage, images, buyUrl } = Astro.props;
+const { title, price, currency, available, coverImage, images, buyUrl, slug } = Astro.props;
 const portada = coverImage ?? images?.[0] ?? "/default-image.jpg";
 
 // Función simple para símbolo según currency
@@ -23,16 +24,17 @@ function formatoPrecio(price: number, currency: string) {
 }
 ---
 
-<article class="product-card">
-  <img src={portada} alt={title} class="product-image" loading="lazy" />
-  <div class="product-details">
-    <h2 class="product-title">{title}</h2>
-    <p class="product-price">{formatoPrecio(price, currency)}</p>
-    {available ? (
-      <p class="product-available">✅ Disponible</p>
-    ) : (
-      <p class="product-unavailable">❌ Agotado</p>
-    )}
+<a href={`/productos/${slug}`} class="product-link">
+  <article class="product-card">
+    <img src={portada} alt={title} class="product-image" loading="lazy" />
+    <div class="product-details">
+      <h2 class="product-title">{title}</h2>
+      <p class="product-price">{formatoPrecio(price, currency)}</p>
+      {available ? (
+        <p class="product-available">✅ Disponible</p>
+      ) : (
+        <p class="product-unavailable">❌ Agotado</p>
+      )}
 
     {available && buyUrl && (
       <a href={buyUrl} class="buy-button" target="_blank" rel="noopener">
@@ -76,6 +78,13 @@ function formatoPrecio(price: number, currency: string) {
     color: green;
     font-weight: 500;
   }
+  
+  .product-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
   .product-unavailable {
     color: red;
     font-weight: 500;
