@@ -1,0 +1,20 @@
+---
+import ProductGallery from '../components/ProductGallery.astro'; // ajusta ruta si es necesario
+
+const images = [
+  '/src/images/products/kitminipapeleria1foto.jpg',
+  '/src/images/products/kitminipapeleria1incluye.jpg',
+  // Agrega más rutas si quieres
+];
+---
+
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Test Product Gallery</title>
+  </head>
+  <body>
+    <h1>Prueba de Product Gallery con Swiper</h1>
+    <ProductGallery images={images} client:load />
+  </body>
+</html>

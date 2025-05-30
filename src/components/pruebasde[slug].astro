@@ -1,16 +1,17 @@
 ---
 // src/pages/productos/[slug].astro
 import { getEntryBySlug } from 'astro:content';
-import ProductGallery from '../../components/ProductGallery.astro';
+import ProductGallery from '../../components/ProductGallery.jsx';
 
 const { slug } = Astro.params;
 const product = await getEntryBySlug('productos', slug);
 
 if (!product) {
   throw new Error(`Producto no encontrado: ${slug}`);
-}
+}   
 
 const { data } = product;
+console.log(product);
 ---
 
 <html lang="es">
@@ -24,8 +25,11 @@ const { data } = product;
     <main class="max-w-4xl mx-auto p-4 my-6 bg-white rounded-2xl shadow-xl border-4 border-pink-200">
       <h1 class="text-3xl font-bold text-pink-600 mb-2">🎀 {data.title}</h1>
       <p class="text-xl mb-4">💵 Precio: <span class="font-semibold text-green-600">${data.price}</span></p>
+      <pre>{JSON.stringify(data.images, null, 2)}</pre>
+      <div class="w-full max-w-xl mx-auto">
+        <ProductGallery images={data.images} client:only="react" />
+      </div>
 
-      <ProductGallery images={data.images} />
 
       <section class="mt-6">
         <h2 class="text-2xl font-semibold text-purple-500 mb-2">✨ Descripción</h2>
