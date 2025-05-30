@@ -25,9 +25,9 @@ measures:
   alto: "15.5Cm + 7 Cm Agarradera"
   ancho: "9 Cm"
 images:
-  - "/src/images/products/kitminipapeleria4.jpg"
-  - "/src/images/products/kitminipapeleria4incluye.png"
-coverImage: "/src/images/products/kitminipapeleria4.jpg"
+  - "/images/products/kitminipapeleria4.jpg"
+  - "/images/products/kitminipapeleria4incluye.png"
+coverImage: "/images/products/kitminipapeleria4.jpg"
 description: |
   ⚠ Imágenes Ilustrativas, por favor leer la descripción completa para conocer lo que incluye cada kit👇👇
 

@@ -18,12 +18,12 @@ measures:
 colors:
   - Unico
 images:
-  - "/src/images/products/lockerminnie0.jpg"
-  - "/src/images/products/lockerminnie1.jpg"
-  - "/src/images/products/lockerminnie2.jpg"
-  - "/src/images/products/lockerminnie3.jpg"
-  - "/src/images/products/lockerminnie5.jpg"
-coverImage: "/src/images/products/lockerminnie0.jpg"
+  - "/images/products/lockerminnie0.jpg"
+  - "/images/products/lockerminnie1.jpg"
+  - "/images/products/lockerminnie2.jpg"
+  - "/images/products/lockerminnie3.jpg"
+  - "/images/products/lockerminnie5.jpg"
+coverImage: "/images/products/lockerminnie0.jpg"
 description: |
   Casillero de Minnie Mouse y mochila exclusiva. Personaliza tu casillero con 10 sorpresas
 
