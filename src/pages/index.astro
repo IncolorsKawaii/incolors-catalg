@@ -2,6 +2,9 @@
 import { getCollection } from 'astro:content';
 import SeccionProductos from '../components/SeccionProductos.astro';
 import Layout from '../layouts/Layout.astro';
+import { IconShoppingCart } from "lucide-react";
+import confetti from 'canvas-confetti';
+
 
 // Obtener todos los productos
 const todos = await getCollection('productos');

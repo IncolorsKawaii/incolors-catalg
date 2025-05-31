@@ -73,13 +73,19 @@ const whatsappURL = `https://wa.me/573003637117?text=${whatsappMessage}`;
 
     <!-- 🛒 Botones -->
     <div class="flex flex-col sm:flex-row gap-4 mt-6">
-      <a
-        href="https://incolorskawaii.github.io/gallery-notion/Carrito/carrito.html"
-        target="_blank"
-        class="flex-1 bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-6 rounded-full shadow-md text-center transition duration-300"
-      >
-        🛍️ Agregar al carrito
-      </a>
+     <button
+       class="flex-1 bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-6 rounded-full shadow-md text-center transition duration-300"
+       data-add-to-cart
+       data-product={JSON.stringify({
+       slug: Astro.params.slug,
+       title: data.title,
+       price: data.price,
+       currency: data.currency,
+       image: data.portada
+     })}
+     >
+          🛒 Añadir al carrito
+     </button>
       <a
         href={whatsappURL}
         target="_blank"

@@ -1,3 +1,5 @@
+
+
 <div id="cart-sidebar" class="cart-sidebar" role="dialog" aria-modal="true" aria-labelledby="cart-title" tabindex="-1">
   <div class="cart-header">
     <h2 id="cart-title">🛍️ Tu carrito kawaii</h2>
@@ -8,7 +10,7 @@
   </div>
   <div class="cart-footer">
     <div class="total">Total: <span id="cart-total">$0</span></div>
-    <button id="go-to-cart">Ver pedido completo</button>
+    <button id="go-to-cart">Completar pedido</button>
   </div>
 </div>
 
@@ -18,6 +20,7 @@
     top: 0;
     right: 0;
     width: 320px;
+    max-width: 100vw;
     height: 100%;
     background-color: #fff0f6;
     box-shadow: -5px 0 15px rgba(255, 192, 203, 0.6);
@@ -40,9 +43,10 @@
   .cart-items {
     flex: 1;
     overflow-y: auto;
+    margin-bottom: 1rem;
   }
   .cart-footer {
-    margin-top: 1rem;
+    margin-top: auto;
     text-align: center;
   }
   #cart-sidebar button {
@@ -59,4 +63,25 @@
     margin-bottom: 0.5rem;
     color: #c2185b;
   }
+
+  .cart-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: #ffe4ec;
+  border-radius: 12px;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 1px 3px rgba(255, 182, 193, 0.3);
+}
+.cart-item img {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #f8bbd0;
+  box-shadow: 0 1px 3px rgba(255, 192, 203, 0.4);
+}
+
 </style>

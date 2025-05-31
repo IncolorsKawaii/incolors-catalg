@@ -1,4 +1,5 @@
 // public/js/cart.js
+import { renderCartSidebar } from "./cartSidebar.js";
 
 document.addEventListener('DOMContentLoaded', () => {
   const cartButton = document.getElementById('cart-button');

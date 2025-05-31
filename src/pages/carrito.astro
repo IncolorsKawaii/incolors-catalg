@@ -28,12 +28,6 @@ import { useState, useEffect } from 'astro/jsx-runtime';
       border-radius: 12px;
       align-items: center;
     }
-    .cart-item img {
-      width: 80px;
-      height: 80px;
-      border-radius: 12px;
-      object-fit: cover;
-    }
     .item-info {
       flex-grow: 1;
     }
@@ -125,21 +119,30 @@ import { useState, useEffect } from 'astro/jsx-runtime';
 
   <h1>🛒 Tu Pedido Kawaii</h1>
 
-  <div id="cart-container">
-    <!-- Aquí se cargan los productos -->
-  </div>
-
+  <div id="cart-container"></div>
   <div class="total" id="cart-total">Total: $0</div>
 
   <form id="order-form">
-    <label for="name">✨ Tu Nombre</label>
-    <input type="text" id="name" name="name" placeholder="Ej: Ana" required />
+    <label for="name">👤 Nombre de quien recibe</label>
+    <input type="text" id="name" required />
 
-    <label for="phone">📱 Tu Teléfono</label>
-    <input type="tel" id="phone" name="phone" placeholder="Ej: +57 300 123 4567" required pattern="^\+?\d{7,15}$" />
+    <label for="id">🪪 Cédula</label>
+    <input type="text" id="id" required />
 
-    <label for="address">🏠 Dirección de Envío</label>
-    <textarea id="address" name="address" placeholder="Ej: Calle 123 #45-67, Bogotá" rows="3" required></textarea>
+    <label for="address">🏠 Dirección</label>
+    <input type="text" id="address" required />
+
+    <label for="extra">📦 Datos adicionales (casa / apto / torre / piso)</label>
+    <input type="text" id="extra" />
+
+    <label for="neighborhood">🏡 Barrio</label>
+    <input type="text" id="neighborhood" required />
+
+    <label for="city">🌆 Ciudad y Departamento</label>
+    <input type="text" id="city" required />
+
+    <label for="phone">📱 Celular</label>
+    <input type="tel" id="phone" required pattern="^\+?\d{7,15}$" />
 
     <button type="submit" class="send-btn">📲 Enviar Pedido por WhatsApp</button>
   </form>
@@ -151,8 +154,6 @@ import { useState, useEffect } from 'astro/jsx-runtime';
     const cartTotalEl = document.getElementById('cart-total');
     const emptyMsg = document.getElementById('empty-msg');
     const form = document.getElementById('order-form');
-
-    // Carga carrito de localStorage
     let cart = JSON.parse(localStorage.getItem('cart') || '[]');
 
     function renderCart() {
@@ -170,11 +171,10 @@ import { useState, useEffect } from 'astro/jsx-runtime';
       let total = 0;
       cart.forEach((item, index) => {
         total += item.price * item.quantity;
-
         const div = document.createElement('div');
         div.className = 'cart-item';
         div.innerHTML = `
-          <img src="${item.image}" alt="${item.title}" />
+          <img src="${item.image}" alt="${item.title}" style="width:80px; height:80px; object-fit:cover; border-radius:12px;" />
           <div class="item-info">
             <div class="item-title">${item.title}</div>
             <div class="item-price">Precio unitario: $${item.price.toLocaleString('es-CO')}</div>
@@ -183,7 +183,7 @@ import { useState, useEffect } from 'astro/jsx-runtime';
               <input type="number" min="1" value="${item.quantity}" class="quantity-input" data-index="${index}" />
             </label>
           </div>
-          <button class="remove-btn" data-index="${index}" title="Eliminar producto">🗑️</button>
+          <button class="remove-btn" data-index="${index}">🗑️</button>
         `;
         cartContainer.appendChild(div);
       });
@@ -191,10 +191,9 @@ import { useState, useEffect } from 'astro/jsx-runtime';
       cartTotalEl.textContent = `Total: $${total.toLocaleString('es-CO')}`;
     }
 
-    // Actualiza cantidad
     cartContainer.addEventListener('input', e => {
       if (e.target.classList.contains('quantity-input')) {
-        const idx = e.target.getAttribute('data-index');
+        const idx = e.target.dataset.index;
         let newQty = parseInt(e.target.value);
         if (isNaN(newQty) || newQty < 1) {
           newQty = 1;
@@ -206,17 +205,15 @@ import { useState, useEffect } from 'astro/jsx-runtime';
       }
     });
 
-    // Eliminar producto
     cartContainer.addEventListener('click', e => {
       if (e.target.classList.contains('remove-btn')) {
-        const idx = e.target.getAttribute('data-index');
+        const idx = e.target.dataset.index;
         cart.splice(idx, 1);
         localStorage.setItem('cart', JSON.stringify(cart));
         renderCart();
       }
     });
 
-    // Enviar pedido por WhatsApp
     form.addEventListener('submit', e => {
       e.preventDefault();
       if (cart.length === 0) {
@@ -225,40 +222,41 @@ import { useState, useEffect } from 'astro/jsx-runtime';
       }
 
       const name = form.name.value.trim();
-      const phone = form.phone.value.trim();
+      const id = form.id.value.trim();
       const address = form.address.value.trim();
+      const extra = form.extra.value.trim();
+      const neighborhood = form.neighborhood.value.trim();
+      const city = form.city.value.trim();
+      const phone = form.phone.value.trim();
 
-      if (!name || !phone || !address) {
-        alert('Por favor llena todos los datos personales 🥺');
+      if (!name || !id || !address || !neighborhood || !city || !phone) {
+        alert('Por favor llena todos los campos obligatorios 🥺');
         return;
       }
 
-      // Construir mensaje kawaii para WhatsApp
       let message = `✨ *Nuevo Pedido Kawaii* ✨%0A%0A`;
       message += `*Nombre:* ${encodeURIComponent(name)}%0A`;
-      message += `*Teléfono:* ${encodeURIComponent(phone)}%0A`;
-      message += `*Dirección:* ${encodeURIComponent(address)}%0A%0A`;
+      message += `*Cédula:* ${encodeURIComponent(id)}%0A`;
+      message += `*Dirección:* ${encodeURIComponent(address)}%0A`;
+      if (extra) message += `*Datos adicionales:* ${encodeURIComponent(extra)}%0A`;
+      message += `*Barrio:* ${encodeURIComponent(neighborhood)}%0A`;
+      message += `*Ciudad y Departamento:* ${encodeURIComponent(city)}%0A`;
+      message += `*Celular:* ${encodeURIComponent(phone)}%0A%0A`;
       message += `*Detalles del pedido:*%0A`;
 
       let total = 0;
       cart.forEach(item => {
-        const line = `- ${item.title} x${item.quantity} = $${(item.price * item.quantity).toLocaleString('es-CO')}`;
-        message += encodeURIComponent(line) + '%0A';
+        message += `- ${encodeURIComponent(item.title)} x${item.quantity} = $${(item.price * item.quantity).toLocaleString('es-CO')}%0A`;
         total += item.price * item.quantity;
       });
 
-      message += `%0A*Total:* $${total.toLocaleString('es-CO')}%0A%0A`;
-      message += `Gracias por tu compra kawaii! 💖`;
+      message += `%0A*Total:* $${total.toLocaleString('es-CO')}%0A%0AGracias por tu compra kawaii! 💖`;
 
-      // Número de WhatsApp destino - cambiar por tu número real sin signos ni espacios
-      const whatsappNumber = '57XXXXXXXXXX';
-
-      // Abrir WhatsApp con mensaje
+      const whatsappNumber = '573103723198';
       const url = `https://wa.me/${whatsappNumber}?text=${message}`;
       window.open(url, '_blank');
     });
 
-    // Renderizar al cargar
     renderCart();
   </script>
 </body>

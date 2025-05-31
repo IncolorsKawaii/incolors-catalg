@@ -1,19 +1,21 @@
 ---
+// ProductCard.astro
+import { IconShoppingCart } from "lucide-react";
+import confetti from 'canvas-confetti';
+
 export interface Props {
   title: string;
   price: number;
-  currency: string;  // ahora obligatorio para mostrar símbolo
+  currency: string;
   available: boolean;
   coverImage?: string;
   images?: string[];
-  buyUrl?: string; // enlace al botón de compra
   slug: string;
 }
 
-const { title, price, currency, available, coverImage, images, buyUrl, slug } = Astro.props;
+const { title, price, currency, available, coverImage, images, slug } = Astro.props;
 const portada = coverImage ?? images?.[0] ?? "/default-image.jpg";
 
-// Función simple para símbolo según currency
 function formatoPrecio(price: number, currency: string) {
   switch(currency) {
     case "COP": return `$${price.toLocaleString("es-CO")}`;
@@ -24,8 +26,8 @@ function formatoPrecio(price: number, currency: string) {
 }
 ---
 
-<a href={`/productos/${slug}`} class="product-link">
-  <article class="product-card">
+<article class="product-card">
+  <a href={`/productos/${slug}`} class="product-link">
     <img src={portada} alt={title} class="product-image" loading="lazy" />
     <div class="product-details">
       <h2 class="product-title">{title}</h2>
@@ -35,14 +37,20 @@ function formatoPrecio(price: number, currency: string) {
       ) : (
         <p class="product-unavailable">❌ Agotado</p>
       )}
+    </div>
+  </a>
 
-    {available && buyUrl && (
-      <a href={buyUrl} class="buy-button" target="_blank" rel="noopener">
-        🛒 Comprar
-      </a>
-    )}
-  </div>
+  {available && (
+    <button
+  class="add-to-cart-button"
+  data-add-to-cart
+  data-product={JSON.stringify({ slug, title, price, currency, image: portada })}
+    >
+     🛒 Añadir
+    </button>
+  )}
 </article>
+
 
 <style>
   .product-card {
@@ -78,29 +86,35 @@ function formatoPrecio(price: number, currency: string) {
     color: green;
     font-weight: 500;
   }
-  
-  .product-link {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-
   .product-unavailable {
     color: red;
     font-weight: 500;
   }
-  .buy-button {
-    display: inline-block;
+  .add-to-cart-button {
     margin-top: 0.5rem;
     background-color: #ffb6c1;
-    color: #fff;
+    color: white;
     padding: 0.5rem 1rem;
     border-radius: 999px;
-    text-decoration: none;
     font-weight: bold;
-    transition: background-color 0.3s;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    width: 100%;
   }
-  .buy-button:hover {
+  .add-to-cart-button:hover {
     background-color: #ff80ab;
+  }
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: #222;
+    color: #fff;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    z-index: 1000;
+    box-shadow: 0 0 10px #00000055;
   }
 </style>
