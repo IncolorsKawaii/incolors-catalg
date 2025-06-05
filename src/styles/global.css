@@ -45,3 +45,34 @@
 .prose p:has(strong:contains("Advertencia"))::before {
   content: "⚠️ ";
 }
+.toast {
+  position: fixed;
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffb6c1;
+  color: black;                  /* Texto negro */
+  -webkit-text-stroke: 0.02px white; /* Borde blanco */
+  padding: 0.8rem 1.5rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  font-weight: bold;
+  z-index: 10000;
+  animation: fade-slide 2.5s ease forwards;
+}
+
+/* Animacion para el toast */
+@keyframes fade-slide {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  10%, 90% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+}

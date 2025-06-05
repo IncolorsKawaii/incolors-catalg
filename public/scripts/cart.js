@@ -1,4 +1,4 @@
-// public/js/cart.js
+// public/js/cart.js para mostrar ocultar el carrito tambien trae otra vista del producto agregado se repite con cartsidebar
 import { renderCartSidebar } from "./cartSidebar.js";
 
 document.addEventListener('DOMContentLoaded', () => {
