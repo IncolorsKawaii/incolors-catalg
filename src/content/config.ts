@@ -9,10 +9,12 @@ const productos = defineCollection({
     destacado: z.boolean().optional(),
     fecha: z.date().optional(),
     tags: z.array(z.string()),
-    colors: z.array(z.string()),
+    colors: z.array(z.string()).optional(),
+    diseño: z.string().optional(),
     measures: z.object({
       alto: z.string(),
-      ancho: z.string()
+      ancho: z.string(),
+      profundidad: z.string().optional()
     }),
     images: z.array(z.string()),
 	 coverImage: z.string().optional(),
