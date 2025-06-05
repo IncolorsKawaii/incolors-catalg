@@ -61,21 +61,38 @@ const whatsappURL = `https://wa.me/573003637117?text=${whatsappMessage}`;
         </p>
 
         <div class="grid sm:grid-cols-2 gap-4 text-sm text-gray-700">
-          <div>
-            <h3 class="font-bold text-pink-500 mb-1">🎨 Colores:</h3>
-            <ul class="list-disc ml-5">
-              {data.colors?.map((color) => <li>{color}</li>)}
-            </ul>
-          </div>
-          <div>
-            <h3 class="font-bold text-pink-500 mb-1">📏 Medidas:</h3>
-            <ul class="list-disc ml-5">
-              {Object.entries(data.measures || {}).map(([key, val]) => (
-                <li><strong>{key}:</strong> {val}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
+  {data.colors && data.colors.length > 0 && (
+    <div>
+      <h3 class="font-bold text-pink-500 mb-1">🎨 Colores:</h3>
+      <ul class="list-disc ml-5">
+        {data.colors.map((color) => <li>{color}</li>)}
+      </ul>
+    </div>
+  )}
+
+  {data.diseño && data.diseño.length > 0 && (
+    <div>
+      <h3 class="font-bold text-pink-500 mb-1">✨ Diseños:</h3>
+      <ul class="list-disc ml-5">
+        {data.diseño.map((d) => <li>{d}</li>)}
+      </ul>
+    </div>
+  )}
+
+  {data.measures && Object.values(data.measures).some((val) => val.trim() !== "") && (
+    <div class="sm:col-span-2">
+      <h3 class="font-bold text-pink-500 mb-1">📏 Medidas:</h3>
+      <ul class="list-disc ml-5">
+        {Object.entries(data.measures).map(([key, val]) =>
+          val.trim() !== "" ? (
+            <li><strong>{key}:</strong> {val}</li>
+          ) : null
+        )}
+      </ul>
+    </div>
+  )}
+</div>
+
 
         <!-- 🛒 Botones -->
         <div class="flex flex-col sm:flex-row gap-4 mt-6">
@@ -108,7 +125,7 @@ const whatsappURL = `https://wa.me/573003637117?text=${whatsappMessage}`;
              <ProductDescription description={data.description} />
            </div>
 
-    <!-- 🏷️ Etiquetas -->
+    <!-- 🏷️ Etiquetas 
     <section class="mt-8">
       <h3 class="text-lg font-semibold text-pink-500">🏷️ Etiquetas:</h3>
       <div class="flex flex-wrap gap-2 mt-2">
@@ -118,7 +135,7 @@ const whatsappURL = `https://wa.me/573003637117?text=${whatsappMessage}`;
           </span>
         ))}
       </div>
-    </section>
+    </section>-->
 
     <!-- 🧡 Productos relacionados -->
     <section class="mt-12">

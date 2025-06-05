@@ -1,6 +1,6 @@
 ---
 title: "Agenda Kawaii Squishy Hojas Decoradas"
-codigo:
+codigo: " "
 price: 48500
 currency: "COP"
 available: true
@@ -17,12 +17,18 @@ measures:
   alto: "17.5 Cm"
   ancho: "12.7 Cm"
   profundidad: " "
-colors: 
+colors: []
 diseño:
   - Zorro (diseño 3D)
   - Koala (diseño 3D)
   - Conejito (diseño 3D)
   - Unicornio (diseño 3D)
+images: 
+  - "/images/products/agesqu1.jpg"
+  - "/images/products/agesqu2.jpg"
+  - "/images/products/agesqu3.jpg"
+  - "/images/products/agesqu4.jpg"
+coverImage: "/images/products/agesqu4.jpg"
 description: |
   Agenda relajante con preciosos diseños en 3D de animalitos Kawaii 🥰🌈  
   Lleva tus apuntes en este adorable cuaderno y dale color a tus notas, escoge tu diseño favorito y plasma todas tus ideas sin perder el toque Kawaii 💕 🌟  

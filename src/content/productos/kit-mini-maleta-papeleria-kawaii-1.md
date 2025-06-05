@@ -1,8 +1,10 @@
 ---
 title: "Kit Mini Maleta PAPELERIA Kawaii #1"
+codigo: " "
 price: 68500
 currency: "COP"
 available: true
+stock: 10
 destacado: true
 fecha: 2025-05-01
 tags:
@@ -21,9 +23,11 @@ colors:
   - Rojo
   - Morado
   - Rosado Claro
+diseño: []
 measures:
   alto: "15.5Cm + 7 Cm Agarradera"
   ancho: "9 Cm"
+  profundidad: ""
 coverImage: "/images/products/kitminipapeleria1foto.jpg"
 images:
   - "/images/products/kitminipapeleria1foto.jpg"
