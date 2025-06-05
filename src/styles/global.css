@@ -31,3 +31,17 @@
     transform: translate(-50%, -30px);
   }
 }
+/* 🌸 Kawaii Markdown Styling Mejorado */
+
+.font-kawaii-formal {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+/* Bloques con emojis (experimental: para frases tipo "Advertencia:" o "Incluye:") */
+.prose p:has(strong:contains("Incluye"))::before {
+  content: "🎁 ";
+}
+
+.prose p:has(strong:contains("Advertencia"))::before {
+  content: "⚠️ ";
+}

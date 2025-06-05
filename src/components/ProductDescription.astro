@@ -1,0 +1,14 @@
+---
+import { marked } from 'marked';
+
+const { description } = Astro.props;
+const html = description ? marked(description) : null;
+---
+
+{html ? (
+  <div class="prose max-w-none text-gray-700 text-base leading-relaxed bg-pink-50 p-4 rounded-xl my-10 text-center font-kawaii-formal">
+  <Fragment set:html={html} />
+  </div>
+) : (
+  <p class="text-gray-400 italic text-center my-10">Sin descripcion disponible.</p>
+)}

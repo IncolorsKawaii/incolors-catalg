@@ -41,5 +41,5 @@ const aleatorios = obtenerAleatorios(productosDisponibles, [...destacados, ...re
 
   <SeccionProductos titulo="✨ Productos Destacados ✨" productos={destacados.map(p => ({ ...p.data, slug: p.slug }))} />
   <SeccionProductos titulo="🆕 Nuevos Ingresos 🆕" productos={recientes.map(p => ({ ...p.data, slug: p.slug }))} />
-  <SeccionProductos titulo="🎁 Descubre algo nuevo 🎁" productos={aleatorios.map(p => ({ ...p.data, slug: p.slug }))} />
+  <SeccionProductos titulo="🎁 SUGERIDOS 🎁" productos={aleatorios.map(p => ({ ...p.data, slug: p.slug }))} />
 </Layout>
